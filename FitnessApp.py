@@ -1,4 +1,10 @@
+import json
+from menu import main_menu
+from MealMenu import main
+
+
 class Users:
+    users_dict_file = 'users_dict.json' # słownik, który będzie przechowywał zarejestrowanych użytkowników
 
     def __init__(self, user_name=None, age=None, weight=None, height=None, gender=None):
         self.user_name = user_name
@@ -80,8 +86,62 @@ class Users:
         else:
             return 2200
 
+    @classmethod
+    def load_users(cls):
+        try:
+            with open(cls.users_dict_file, "r") as file:
+                users_dict = json.load(file)
+                return users_dict
+        except FileNotFoundError:
+            return {}       #Jeśli plik nie istnieje to zwróci nam pusty słownik
+
+    @classmethod
+    def save_users(cls):
+        with open(cls.users_dict_file, "w") as file:
+            json.dump(cls.users_dict, file, indent=4)
+
+    @classmethod
+    def check_user_exists(cls, user_name):      # sprawdza czy użytkownik istnieje w bazie danych
+        return user_name in cls.users_dict
+
+    @classmethod
+    def register_user(cls, user_name, age, weight, height, gender):
+        new_user = Users(user_name, age, weight, height, gender)
+        cls.users_dict[user_name] = {
+            "user_name": user_name,
+            "age": age,
+            "weight": weight,
+            "height": height,
+            "gender": gender
+        }
+        print(f"Użytkownik {user_name} został zarejestrowany")
+        cls.save_users()   #zapisuje zmiany do pliku
+
+    @classmethod
+    def edit_user_data(cls, user_name):
+        if user_name in cls.users_dict:
+            user_data = cls.users_dict[user_name]
+            print(f"Aktualne dane użytkownika {user_name}: ")
+            print(f"Wiek: {user_data['age']}")
+            print(f"Waga: {user_data['weight']}")
+            print(f"Wzrost: {user_data['height']}")
+            print(f"Płeć: {user_data['gender']}")
+
+            #Edytowanie danych
+
+            user_data['age'] = int(input("Podaj aktualny wiek: "))
+            user_data['weight'] = float(input("Podaj aktualną wagę: "))
+            user_data['height'] = float(input("Podaj aktualny wzrost: "))
+
+            cls.save_users()
+            print(f"Dane użytkownika {user_name} zostały zaktualizowane")
+        else:
+            print(f"Użytkownik o nazwie {user_name} nie istnieje :(")
+
+Users.users_dict = Users.load_users()   #Inicjalizacja bazy użytkowników
+
 def main():
-    print("Witaj w aplikacji XYZ!")
+    print("Witaj w aplikacji FitApp!")
     print("Aplikacja pomoże Ci zaplanować dietę oraz osiągnąć wymarzoną sylwetkę")
 
     user = Users()
@@ -91,6 +151,8 @@ def main():
     weight = user.weight_control()
     height = user.height_control()
     gender = user.gender_control()
+
+    Users.register_user(nazwa_uzytkownika, age, weight, height, gender)
 
 
     bmi = user.calculate_bmi(weight, height)
@@ -107,5 +169,18 @@ def main():
     print(f"Twoje BMI: {bmi:.2f} - {category}")
     print(f"Twoja dzienna ilość kalorii: {daily_kcal} kcal")
 
+def login():
+    user_name = input("Podaj nazwę użytkownika: ")
+
+    if Users.check_user_exists(user_name):
+        print(f"Witaj ponownie {user_name} :)")
+        main_menu(user_name) #Jeśli użytkownik nie istnieje to uruchomiona zostaje funkcja rejestracji
+    else:
+        print(f"Użytkownik {user_name} nie istnieje. Stwórz nowe konto")
+        main()  #Jeśli nie istnieje
+
+
+
 if __name__ == "__main__":
-    main()
+    login()
+
