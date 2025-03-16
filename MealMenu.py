@@ -9,9 +9,10 @@ class Meal:
 
 
 class MealTracker:
-    def __init__(self):
+    def __init__(self, daily_calorie_limit):
         self.meals = []
         self.allowed_meal_types = ["Śniadanie", "Lunch", "Obiad", "Przekąska", "Kolacja"]
+        self.daily_calorie_limit = daily_calorie_limit
 
     def add_meal(self):
         name = input("Podaj nazwę posiłku: ")
@@ -43,15 +44,31 @@ class MealTracker:
         for i, meal in enumerate(self.meals, start=1):
             print(f"{i}. {meal}")
 
+    def display_meals_summary(self):
+        if not self.meals:
+            print("Brak dodanych posiłków.")
+            return
+
+        total_calories = sum(meal.calories for meal in self.meals)
+        remaining_calories = self.daily_calorie_limit - total_calories
+
+        print("\nPodsumowanie posiłków:")
+        for meal in self.meals:
+            print(meal)
+        print(f"Suma kalorii: {total_calories} kcal")
+        print(f"Pozostałe kalorie do spożycia: {remaining_calories} kcal")
+
 
 def main():
-    tracker = MealTracker()
+    daily_calorie_limit = int(input("Podaj dzienny limit kalorii: "))
+    tracker = MealTracker(daily_calorie_limit)
 
     while True:
         print("\nWybierz opcję:")
         print("1. Dodaj posiłek")
         print("2. Wybierz posiłek")
-        print("3. Wyjdź")
+        print("3. Wyświetl podsumowanie posiłków")
+        print("4. Wyjdź")
 
         choice = input("Wybór: ")
 
@@ -60,6 +77,8 @@ def main():
         elif choice == '2':
             tracker.choose_meal()
         elif choice == '3':
+            tracker.display_meals_summary()
+        elif choice == '4':
             print("Do widzenia!")
             break
         else:
