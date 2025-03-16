@@ -140,34 +140,38 @@ class Users:
 
 Users.users_dict = Users.load_users()   #Inicjalizacja bazy użytkowników
 
-def main():
+def create_new_user() -> bool:
     print("Witaj w aplikacji FitApp!")
     print("Aplikacja pomoże Ci zaplanować dietę oraz osiągnąć wymarzoną sylwetkę")
+    try:
+        user = Users()
 
-    user = Users()
+        nazwa_uzytkownika = user.create_user_name()
+        age = user.age_control()
+        weight = user.weight_control()
+        height = user.height_control()
+        gender = user.gender_control()
 
-    nazwa_uzytkownika = user.create_user_name()
-    age = user.age_control()
-    weight = user.weight_control()
-    height = user.height_control()
-    gender = user.gender_control()
-
-    Users.register_user(nazwa_uzytkownika, age, weight, height, gender)
-
-
-    bmi = user.calculate_bmi(weight, height)
-    category = user.bmi_category(bmi)
-    daily_kcal = user.kcal(gender)
+        Users.register_user(nazwa_uzytkownika, age, weight, height, gender)
 
 
-    print("\nPodsumowanie wprowadzonych danych:")
-    print(f"Nazwa użytkownika: {nazwa_uzytkownika}")
-    print(f"Wiek: {age} lat")
-    print(f"Waga: {weight} kg")
-    print(f"Wzrost: {height} cm")
-    print(f"Płeć: {'Kobieta' if gender == 'K' else 'Mężczyzna'}")
-    print(f"Twoje BMI: {bmi:.2f} - {category}")
-    print(f"Twoja dzienna ilość kalorii: {daily_kcal} kcal")
+        bmi = user.calculate_bmi(weight, height)
+        category = user.bmi_category(bmi)
+        daily_kcal = user.kcal(gender)
+
+
+        print("\nPodsumowanie wprowadzonych danych:")
+        print(f"Nazwa użytkownika: {nazwa_uzytkownika}")
+        print(f"Wiek: {age} lat")
+        print(f"Waga: {weight} kg")
+        print(f"Wzrost: {height} cm")
+        print(f"Płeć: {'Kobieta' if gender == 'K' else 'Mężczyzna'}")
+        print(f"Twoje BMI: {bmi:.2f} - {category}")
+        print(f"Twoja dzienna ilość kalorii: {daily_kcal} kcal")
+        return True
+    except Exception as ex:
+        print(ex)
+        return False
 
 def login():
     user_name = input("Podaj nazwę użytkownika: ")
@@ -177,10 +181,11 @@ def login():
         main_menu(user_name) #Jeśli użytkownik nie istnieje to uruchomiona zostaje funkcja rejestracji
     else:
         print(f"Użytkownik {user_name} nie istnieje. Stwórz nowe konto")
-        main()  #Jeśli nie istnieje
+        user_created = create_new_user()  #Jeśli nie istnieje
+        if user_created:
+            main_menu(user_name)
 
 
 
 if __name__ == "__main__":
     login()
-
