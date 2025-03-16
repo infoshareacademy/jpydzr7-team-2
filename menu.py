@@ -1,4 +1,9 @@
+from training_log import TrainingLog
+
 def main_menu():
+    user_name = "Pawel"
+    training_log = TrainingLog(user_name)
+
     while True:
         print("\nMenu FitApp:")
         print("1. Dodaj posiłek")
@@ -17,7 +22,7 @@ def main_menu():
 
         if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']:
             if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
-                handle_choice(choice)
+                handle_choice(choice, training_log)  # Przekazujemy obiekt do funkcji
             elif choice == '11':
                 print("Zamykam program...")
                 save_data()
@@ -25,60 +30,27 @@ def main_menu():
         else:
             print("Błąd: Proszę wybrać poprawną opcję (1-11).")
 
-def handle_choice(choice):
+def handle_choice(choice, training_log):  # Dodajemy parametr training_log
     if choice == '1':
         add_meal()
     elif choice == '2':
         choose_meal()
     elif choice == '3':
-        add_training()
+        training_log.add_training()  # Wywołanie metody na obiekcie training_log
     elif choice == '4':
-        choose_training()
+        training_log.choose_training()  # Wywołanie metody na obiekcie training_log
     elif choice == '5':
         show_meals()
     elif choice == '6':
-        show_training()
+        training_log.show_trainings()  # Wywołanie metody na obiekcie training_log
     elif choice == '7':
         user_data()
     elif choice == '8':
         edit_meal()
     elif choice == '9':
-        edit_training()
+        training_log.edit_training()  # Wywołanie metody na obiekcie training_log
     elif choice == '10':
         count_calories()
-
-def add_meal():
-    print("Dodawanie posiłku...")
-
-def choose_meal():
-    print("Wybieranie posiłku...")
-
-def add_training():
-    print("Dodawanie treningu...")
-
-def choose_training():
-    print("Wybieranie treningu...")
-
-def show_meals():
-    print("Wyświetlanie listy posiłków...")
-
-def show_training():
-    print("Wyświetlanie listy treningów...")
-
-def user_data():
-    print("Wyświetlanie danych użytkownika...")
-
-def edit_meal():
-    print("Edycja posiłku...")
-
-def edit_training():
-    print("Edycja treningu...")
-
-def count_calories():
-    print("Zliczanie kalorii...")
-
-def save_data():
-    print("Zapisywanie danych użytkownika...")
 
 if __name__ == "__main__":
     main_menu()
