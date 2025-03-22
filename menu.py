@@ -1,8 +1,11 @@
 from training_log import TrainingLog
+from MealMenu import MealTracker
+import json
 
-def main_menu():
-    user_name = "Pawel"
+
+def main_menu(user_name):
     training_log = TrainingLog(user_name)
+    meal_tracker = MealTracker(user_name)  # Tworzymy instancję MealTracker
 
     while True:
         print("\nMenu FitApp:")
@@ -20,37 +23,36 @@ def main_menu():
 
         choice = input("Wybierz opcję (1-11): ")
 
-        if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']:
-            if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
-                handle_choice(choice, training_log)  # Przekazujemy obiekt do funkcji
-            elif choice == '11':
-                print("Zamykam program...")
-                save_data()
-                break
+        if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
+            handle_choice(choice, training_log, meal_tracker)  # Przekazujemy meal_tracker
+        elif choice == '11':
+            print("Zamykam program...")
+            break
         else:
             print("Błąd: Proszę wybrać poprawną opcję (1-11).")
 
-def handle_choice(choice, training_log):  # Dodajemy parametr training_log
+def handle_choice(choice, training_log, meal_tracker):  # Dodajemy meal_tracker
     if choice == '1':
-        add_meal()
+        meal_tracker.add_meal()  # Wywołujemy metodę na obiekcie meal_tracker
     elif choice == '2':
-        choose_meal()
+        meal_tracker.choose_meal()
     elif choice == '3':
-        training_log.add_training()  # Wywołanie metody na obiekcie training_log
+        training_log.add_training()
     elif choice == '4':
-        training_log.choose_training()  # Wywołanie metody na obiekcie training_log
+        training_log.choose_training()
     elif choice == '5':
-        show_meals()
+        meal_tracker.display_meals_summary()
     elif choice == '6':
-        training_log.show_trainings()  # Wywołanie metody na obiekcie training_log
+        training_log.show_trainings()
     elif choice == '7':
-        user_data()
+        print("Funkcja wyświetlania danych w trakcie implementacji")
     elif choice == '8':
-        edit_meal()
+        print("Funkcja edycji posiłków w trakcie implementacji")
     elif choice == '9':
-        training_log.edit_training()  # Wywołanie metody na obiekcie training_log
+        print("Funkcja edycji treningów w trakcie implementacji")
     elif choice == '10':
-        count_calories()
+        meal_tracker.display_meals_summary()
 
 if __name__ == "__main__":
-    main_menu()
+    user_name = input("Podaj swoje imię: ")  # Pobierz imię od użytkownika
+    main_menu(user_name)  # Przekaż user_name do funkcji
