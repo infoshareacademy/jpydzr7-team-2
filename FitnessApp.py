@@ -1,7 +1,6 @@
 import json
 from menu import main_menu
 from training_log import TrainingLog
-from MealMenu import main
 
 
 class Users:
