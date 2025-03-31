@@ -4,7 +4,7 @@ from MealMenu import MealTracker
 
 def main_menu(user_name):
     training_log = TrainingLog(user_name)
-    meal_tracker = MealTracker(user_name)  # Tworzymy instancję MealTracker
+    meal_tracker = MealTracker(user_name)
 
     while True:
         print("\nMenu FitApp:")
@@ -14,12 +14,12 @@ def main_menu(user_name):
         print("4. Wyświetl listę posiłków")
         print("5. Wyświetl listę treningów")
         print("6. Wyświetl moje dane")
-        print("7. Edytuj posiłek")
+        print("7. Edytuj moje dane")
         print("8. Usuń trening")
         print("9. Zlicz kalorie i pokaż ile jeszcze mogę przyjąć nowych")
         print("10. Zamknij program")
 
-        choice = input("Wybierz opcję (1-11): ")
+        choice = input("Wybierz opcję (1-10): ")
 
         if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
             handle_choice(choice, training_log, meal_tracker, user_name)  # Przekazujemy user_name
@@ -27,10 +27,12 @@ def main_menu(user_name):
             print("Zamykam program...")
             break
         else:
-            print("Błąd: Proszę wybrać poprawną opcję (1-11).")
+            print("Błąd: Proszę wybrać poprawną opcję (1-10).")
 
 
 def handle_choice(choice, training_log, meal_tracker, user_name):  # Dodajemy user_name
+    from FitnessApp import Users
+    user_data = Users
     if choice == '1':
         meal_tracker.add_meal()  # Wywołujemy metodę na obiekcie meal_tracker
     elif choice == '2':
@@ -45,7 +47,7 @@ def handle_choice(choice, training_log, meal_tracker, user_name):  # Dodajemy us
         # Wyświetlamy dane użytkownika
         display_user_data(user_name)
     elif choice == '7':
-        print("Funkcja edycji posiłków w trakcie implementacji")
+        user_data.edit_user_data(user_name)
     elif choice == '8':
         training_log.remove_training()
     elif choice == '9':
