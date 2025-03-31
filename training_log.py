@@ -1,7 +1,8 @@
-import json
 import os
 from datetime import datetime
-from user import User  # Importujemy klasę User
+import json
+
+
 
 class Training:
     def __init__(self, activity, duration, calories_burned, date=None):
@@ -27,7 +28,7 @@ class TrainingLog:
         self.trainings = []
         self.user = None
         self.activities = {
-            "Bieganie": 12,  # Kalorie spalane na minutę
+            "Bieganie": 12,
             "Spacer": 4,
             "Siłownia": 8,
             "Jazda na rowerze": 8,
@@ -35,27 +36,27 @@ class TrainingLog:
             "Fitness": 9,
             "Gra w squasha": 17
         }
-        self.filename = f"{user_name}.json"  # Ustawiamy nazwę pliku na podstawie imienia użytkownika
+        self.filename = f"{user_name}.json"
         self.load_trainings()
 
     def load_trainings(self):
-        """Wczytuje treningi i dane użytkownika z pliku JSON."""
+        from FitnessApp import Users
         if os.path.exists(self.filename):
             with open(self.filename, 'r') as file:
                 data = json.load(file)
+                if 'user' in data:
+                    self.user = Users(**data['user'])
                 self.trainings = [Training(**item) for item in data['trainings']]
-                self.user = User(**data['user']) if data['user'] else None
 
     def save_trainings(self):
-        """Zapisuje treningi i dane użytkownika do pliku JSON."""
         with open(self.filename, 'w') as file:
-            json.dump({
-                "trainings": [training.to_dict() for training in self.trainings],
-                "user": self.user.to_dict() if self.user else None
-            }, file, indent=4)
+            data = {
+                "user": self.user.__dict__ if self.user else None,
+                "trainings": [training.to_dict() for training in self.trainings]
+            }
+            json.dump(data, file, indent=4)
 
     def add_user_info(self, name, age, gender):
-        """Dodaje informacje o użytkowniku."""
         self.user = User(name, age, gender)
         self.save_trainings()  # Zapisz dane użytkownika po ich wprowadzeniu
 
