@@ -76,7 +76,11 @@ WSGI_APPLICATION = 'Fitapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'Fitapp',
+        'USER': 'tech',
+        'PASSWORD': 'tech',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
