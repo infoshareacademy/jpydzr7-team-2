@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista treningów</title>
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" typ="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+    <h1>Lista treningów</h1>
+    <form method="get">
+        <label for="date">Wybierz datę:</label>
+        <input type="date" name="date" id="date" required>
+        <button type="submit">Pokaż treningi</button>
+    </form>
+
+    <h1>Treningi:</h1>
+    <ul>
+        {% for training in trainings %}
+            <li>
+                {{ training.activity_type.name }} - {{ training.date|date:"d/m/Y" }} - {{ training.duration }} minut -
+                Spalone kalorie: {{ training.calories_burned }} kcal
+                <form action="{% url 'delete_training' training.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć ten trening?')" class="delete-button">Usuń</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'menu' %}" class="btn-return">Powrót</a>
+    <div class="footer">
+        &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.
+    </div>
+</body>
+</html>
