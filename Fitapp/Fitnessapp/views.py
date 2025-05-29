@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import TrainingForm
-from .models import Trainings, Users
+from .models import Trainings, Users, Meals
 from django.utils import timezone
 
 
@@ -8,7 +8,19 @@ def menu(request):
     return render(request, 'menu/menu.html')
 
 def add_meal(request):
-    return render(request, 'add_meal/add_meal.html')
+    if request.method == 'POST':
+        user = Users.objects.get(id=1)
+        meal_type = request.POST.get('meal_type')
+        name = request.POST.get('name')
+        calories = request.POST.get('calories')
+
+        Meals(
+            user=user,meal_type=meal_type,name=name,calories=calories
+        ).save()
+
+        return render(request, 'add_meal/add_meal.html', {})
+
+    return render(request, 'add_meal/add_meal.html', {})
 
 def list_meals(request):
     return render(request, 'list_meals/list_meals.html')

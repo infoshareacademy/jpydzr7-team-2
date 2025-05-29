@@ -1,10 +1,28 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dodawanie posiłku</title>
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" typ="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
+<div class="appbar">
+        FitApp
+    </div>
+    <h1>Dodaj posiłek</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="meal_type" class="form-label">Rodzaj posiłku</label>
+        <input type="text" class="form-control" id="meal_type" name="meal_type" required>
+        <label for="calories" class="form-label">Kalorie</label>
+        <input type="text" class="form-control" id="calories" name="calories" required>
+        <label for="name" class="form-label">Nazwa posiłku</label>
+        <input type="text" class="form-control" id="name" name="name" required>
 
+        <button type="submit">Dodaj posiłek</button>
+    </form>
 </body>
 </html>
