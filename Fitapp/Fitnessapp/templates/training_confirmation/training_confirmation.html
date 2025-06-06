@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdzenie dodania treningu</title>
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" typ="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+    <h1>Trening dodany!</h1>
+    <p>Trening "{{ training.activity_type.name }}" został pomyślnie dodany na dzień {{ training.date|date:"d/m/Y" }}.</p>
+    <p>Czas trwania: {{ training.duration }} minut</p>
+    <p>Spalone kalorie: {{ training.calories_burned }} kcal</p>
+    <a href="{% url 'training_list' %}" class="btn-return" >Powróć do listy treningów</a>
+    <div class="footer">
+        &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.
+    </div>
+</body>
+</html>

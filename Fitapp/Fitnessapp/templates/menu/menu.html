@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitApp</title>
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" typ="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <main>
+        <h1>Menu FitApp</h1>
+        <ul>
+            <li><a href="{% url 'add_meal' %}" class="btn">1. Dodaj posiłek</a></li>
+            <li><a href="{% url 'add_training' %}" class="btn">2. Dodaj trening</a></li>
+            <li><a href="{% url 'list_meals' %}" class="btn">3. Wyświetl listę posiłków</a></li>
+            <li><a href="{% url 'training_list' %}" class="btn">4. Wyświetl listę treningów</a></li>
+            <li><a href="{% url 'view_data' %}" class="btn">5. Wyświetl moje dane</a></li>
+            <li><a href="{% url 'edit_data' %}" class="btn">6. Edytuj moje dane</a></li>
+            <li><a href="{% url 'delete_meal' %}" class="btn">7. Usuń posiłek</a></li>
+            <li><a href="{% url 'count_calories' %}" class="btn">8. Zlicz kalorie i pokaż ile jeszcze mogę przyjąć nowych</a></li>
+        </ul>
+    </main>
+
+    <div class="footer">
+        &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.
+    </div>
+</body>
+</html>
