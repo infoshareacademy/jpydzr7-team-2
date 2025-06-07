@@ -9,7 +9,10 @@ urlpatterns = [
     path('trainings/', views.training_list, name='training_list'),
     path('view_data/', views.view_data, name='view_data'),
     path('edit_data/', views.edit_data, name='edit_data'),
-    path('delete_meal/', views.delete_meal, name='delete_meal'),
+    path('delete_meals/<int:meal_id>/', views.delete_meal, name='delete_meal'),
     path('delete_training//<int:training_id>/', views.delete_training, name='delete_training'),
     path('count_calories/', views.count_calories, name='count_calories'),
+    path('login/', views.login_view, name='login'),
+    path('register/', views.register_view, name='register'),
+    path('logout/', views.logout_view, name='logout'),
 ]

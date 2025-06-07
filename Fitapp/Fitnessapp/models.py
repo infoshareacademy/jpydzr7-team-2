@@ -6,14 +6,16 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
 class Meals(models.Model):
     user = models.ForeignKey('Users', models.DO_NOTHING)
-    meal_type = models.CharField(max_length=9)
+    meal_type = models.ForeignKey('SMeals', models.DO_NOTHING, db_column='meal_type')
     name = models.CharField(max_length=100)
     calories = models.IntegerField()
-    creation_date = models.DateTimeField()
+    is_deleted = models.BooleanField(default=False)
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'Meals'
@@ -25,7 +27,7 @@ class Trainings(models.Model):
     duration = models.IntegerField()
     calories_burned = models.IntegerField()
     date = models.DateTimeField()
-    is_deleted = models.IntegerField(blank=True, null=True)
+    is_deleted = models.BooleanField(default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -43,18 +45,35 @@ class UserBmiHistory(models.Model):
         db_table = 'User_bmi_history'
 
 
-class Users(models.Model):
-    id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=100)
+class UserManager(BaseUserManager):
+    def create_user(self, first_name, age, password=None, **extra_fields):
+        if not first_name:
+            raise ValueError('Użytkownik musi mieć imię')
+        user = self.model(first_name=first_name, age=age, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, first_name, age, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(first_name, age, password, **extra_fields)
+
+
+class Users(AbstractBaseUser, PermissionsMixin):
+    first_name = models.CharField(max_length=100, unique=True)  # Używamy jako login
     last_name = models.CharField(max_length=100, blank=True, null=True)
     age = models.SmallIntegerField()
-    password = models.CharField(max_length=100, blank=True, null=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     height = models.IntegerField()
     gender = models.CharField(max_length=1)
-    status = models.CharField(max_length=10)
-    creation_date = models.DateTimeField()
+    status = models.CharField(max_length=10, default='active')
+    creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(blank=True, null=True)
+    objects = UserManager()
+
+    USERNAME_FIELD = 'first_name'
+    REQUIRED_FIELDS = ['age']
 
     class Meta:
         db_table = 'Users'
@@ -68,6 +87,17 @@ class SActivityType(models.Model):
 
     class Meta:
         db_table = 's_activity_type'
+
+    def __str__(self):
+        return self.name
+
+class SMeals(models.Model):
+    code = models.CharField(unique=True, max_length=100)
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=10)
+
+    class Meta:
+            db_table = 's_meals'
 
     def __str__(self):
         return self.name

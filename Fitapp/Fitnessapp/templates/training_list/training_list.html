@@ -18,20 +18,33 @@
         <input type="date" name="date" id="date" required>
         <button type="submit">Pokaż treningi</button>
     </form>
+    <div class="filter-badges" style="text-align: center; margin: 20px 0;">
+        <span style="margin-right: 10px; font-weight: bold;">Wybierz aktywność:</span>
+        <a href="{% url 'training_list' %}" class="badge {% if not selected_type_id %}active{% endif %}">Wszystkie</a>
+        {% for atype in activity_types %}
+            <a href="{% url 'training_list' %}?activity_type_id={{ atype.id }}" class="badge {% if atype.id|stringformat:"s" == selected_type_id %}active{% endif %}">
+                {{ atype.name }}
+            </a>
+        {% endfor %}
+    </div>
 
     <h1>Treningi:</h1>
-    <ul>
-        {% for training in trainings %}
-            <li>
-                {{ training.activity_type.name }} - {{ training.date|date:"d/m/Y" }} - {{ training.duration }} minut -
-                Spalone kalorie: {{ training.calories_burned }} kcal
-                <form action="{% url 'delete_training' training.id %}" method="POST" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć ten trening?')" class="delete-button">Usuń</button>
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if trainings %}
+        <ul>
+            {% for training in trainings %}
+                <li>
+                    <span class="badge">{{ training.activity_type.name }}</span> {{ training.date|date:"d/m/Y" }} – {{ training.duration }} minut –
+                    Spalone kalorie: {{ training.calories_burned }} kcal
+                    <form action="{% url 'delete_training' training.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć ten trening?')" class="delete-button">Usuń</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nie masz jeszcze żadnych treningów.</p>
+    {% endif %}
     <a href="{% url 'menu' %}" class="btn-return">Powrót</a>
     <div class="footer">
         &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.

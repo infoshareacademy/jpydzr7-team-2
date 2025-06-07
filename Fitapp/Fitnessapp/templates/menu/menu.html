@@ -6,13 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitApp</title>
-    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" typ="image/x-icon">
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <div class="appbar">
-        FitApp
+        <span>FitApp</span>
     </div>
+
+    {% if user.is_authenticated %}
+        <div class="logout-container">
+            <a href="{% url 'logout' %}" class="logout-button">Wyloguj się</a>
+        </div>
+    {% endif %}
 
     <main>
         <h1>Menu FitApp</h1>
@@ -23,8 +29,7 @@
             <li><a href="{% url 'training_list' %}" class="btn">4. Wyświetl listę treningów</a></li>
             <li><a href="{% url 'view_data' %}" class="btn">5. Wyświetl moje dane</a></li>
             <li><a href="{% url 'edit_data' %}" class="btn">6. Edytuj moje dane</a></li>
-            <li><a href="{% url 'delete_meal' %}" class="btn">7. Usuń posiłek</a></li>
-            <li><a href="{% url 'count_calories' %}" class="btn">8. Zlicz kalorie i pokaż ile jeszcze mogę przyjąć nowych</a></li>
+            <li><a href="{% url 'count_calories' %}" class="btn">7. Zlicz kalorie i pokaż ile jeszcze mogę przyjąć nowych</a></li>
         </ul>
     </main>
 
