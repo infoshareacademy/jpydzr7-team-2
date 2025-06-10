@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje konto</title>
+    <link rel="icon" href="{% static 'icon/meal.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="page-title">Moje konto</h1>
+            {% if not edit_mode %}
+                <a href="?edit=1" class="btn btn-success">Edytuj dane</a>
+            {% endif %}
+        </div>
+
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if edit_mode %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="mt-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+                    <a href="{% url 'my_account' %}" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        {% else %}
+            <!-- Wyświetlanie danych użytkownika -->
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Imię:</div>
+                <div class="col-md-8">{{ user.first_name }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Nazwisko:</div>
+                <div class="col-md-8">{{ user.last_name }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Wiek:</div>
+                <div class="col-md-8">{{ user.age }}</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Waga:</div>
+                <div class="col-md-8">{{ user.weight }} kg</div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-4 fw-bold">Wzrost:</div>
+                <div class="col-md-8">{{ user.height }} cm</div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-4 fw-bold">Płeć:</div>
+                <div class="col-md-8">{{ user.gender }}</div>
+            </div>
+        {% endif %}
+
+        <a href="{% url 'menu' %}" class="btn btn-outline-success mt-3">Powrót</a>
+    </div>
+
+    <footer class="footer bg-success text-white text-center py-2 mt-5">
+        &copy; 2025 FitApp. Wszelkie prawa zastrzeżone.
+    </footer>
+
+</body>
+</html>

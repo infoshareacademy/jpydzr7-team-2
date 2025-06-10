@@ -3,6 +3,9 @@ from .forms import TrainingForm, UserRegistrationForm, MealForm
 from .models import Trainings, Users, Meals, SActivityType
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import UserProfileForm
 
 def register_view(request):
     if request.method == 'POST':
@@ -68,6 +71,27 @@ def list_meals(request):
 
 def view_data(request):
     return render(request, 'view_data/view_data.html')
+
+@login_required
+def my_account_view(request):
+    user = request.user
+    edit_mode = request.GET.get('edit') == '1'
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Dane zostały zaktualizowane.')
+            return redirect('my_account')
+    else:
+        form = UserProfileForm(instance=user)
+
+    context = {
+        'form': form,
+        'user': user,
+        'edit_mode': edit_mode
+    }
+    return render(request, 'my_account_view/my_account_view.html', context)
 
 def edit_data(request):
     return render(request, 'edit_data/edit_data.html')

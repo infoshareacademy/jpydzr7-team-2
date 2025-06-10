@@ -86,3 +86,15 @@ class MealForm(forms.ModelForm):
         super(MealForm, self).__init__(*args, **kwargs)
         today = timezone.now().date()
         self.fields['date'].widget.attrs['max'] = today
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Users
+        fields = ['first_name', 'last_name', 'age', 'weight', 'height']
+        labels = {
+            'first_name': 'Imię',
+            'last_name': 'Nazwisko',
+            'age': 'Wiek',
+            'weight': 'Waga',
+            'height': 'Wzrost',
+        }
