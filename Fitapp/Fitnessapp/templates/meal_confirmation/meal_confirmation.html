@@ -16,7 +16,7 @@
     <p>Posiłek: <strong>{{ meal.name }}</strong></p>
     <p>Rodzaj: {{ meal.meal_type }}</p>
     <p>Kalorie: {{ meal.calories }} kcal</p>
-    <p>Data: {{ meal.creation_date|date:"d/m/Y" }}</p>
+    <p>Data: {{ meal.date|date:"d/m/Y" }}</p>
 
     <a href="{% url 'list_meals' %}" class="btn-return">Powróć do listy posiłków</a>
 

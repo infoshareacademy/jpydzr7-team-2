@@ -43,7 +43,6 @@ def add_meal(request):
         if form.is_valid():
             meal = form.save(commit=False)
             meal.user = request.user
-            meal.creation_date = timezone.now()
             meal.save()
             return render(request, 'meal_confirmation/meal_confirmation.html', {'meal': meal})
     else:
@@ -65,7 +64,7 @@ def list_meals(request):
         except ValueError:
             pass
 
-    meals = meals.order_by('-creation_date')
+    meals = meals.order_by('-date')
 
     return render(request, 'list_meals/list_meals.html', {'meals': meals})
 

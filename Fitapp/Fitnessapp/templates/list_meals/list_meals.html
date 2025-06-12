@@ -24,7 +24,7 @@
         <ul>
             {% for meal in meals %}
                 <li>
-                    <strong>{{ meal.creation_date|date:"d/m/Y" }} - {{ meal.meal_type }}</strong> {{ meal.name }} - {{ meal.calories }} kcal
+                    <strong>{{ meal.date|date:"d/m/Y" }} - {{ meal.meal_type }}</strong> {{ meal.name }} - {{ meal.calories }} kcal
                     <form action="{% url 'delete_meal' meal.id %}" method="POST" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć ten posiłek?')" class="delete-button">

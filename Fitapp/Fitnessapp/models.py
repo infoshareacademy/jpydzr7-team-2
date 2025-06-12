@@ -14,6 +14,7 @@ class Meals(models.Model):
     meal_type = models.ForeignKey('SMeals', models.DO_NOTHING, db_column='meal_type')
     name = models.CharField(max_length=100)
     calories = models.IntegerField()
+    date = models.DateTimeField()
     is_deleted = models.BooleanField(default=False)
     creation_date = models.DateTimeField(auto_now_add=True)
 
