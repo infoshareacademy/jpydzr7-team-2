@@ -18,7 +18,7 @@
         <input type="date" name="date" id="date" required>
         <button type="submit">Pokaż treningi</button>
     </form>
-    <div class="filter-badges" style="text-align: center; margin: 20px 0;">
+    <div class="filter-badges">
         <span style="margin-right: 10px; font-weight: bold;">Wybierz aktywność:</span>
         <a href="{% url 'training_list' %}" class="badge {% if not selected_type_id %}active{% endif %}">Wszystkie</a>
         {% for atype in activity_types %}
@@ -27,7 +27,6 @@
             </a>
         {% endfor %}
     </div>
-
     <h1>Treningi:</h1>
     {% if trainings %}
         <ul>
