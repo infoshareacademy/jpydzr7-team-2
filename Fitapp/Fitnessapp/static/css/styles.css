@@ -110,7 +110,7 @@ input[type="date"], select {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button, .btn, .btn-return {
+button, .btn, .btn-return, .btn-success {
     padding: 8px 20px;
     font-size: 0.95em;
     border: none;
@@ -125,9 +125,19 @@ button, .btn, .btn-return {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button:hover, .btn:hover, .btn-return:hover {
+button:hover, .btn:hover, .btn-return:hover, .btn-success:hover {
     background: linear-gradient(135deg, #4caf50, #388e3c);
     transform: translateY(-1px);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #388e3c, #2e7d32);
+    margin: 15px auto 15px;
+    display: block;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #2e7d32, #245523);
 }
 
 .btn-return {

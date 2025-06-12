@@ -93,9 +93,6 @@ def my_account_view(request):
     }
     return render(request, 'my_account_view/my_account_view.html', context)
 
-def edit_data(request):
-    return render(request, 'edit_data/edit_data.html')
-
 def delete_meal(request, meal_id):
     meal = get_object_or_404(Meals, id=meal_id, is_deleted=False)
 
@@ -107,8 +104,6 @@ def delete_meal(request, meal_id):
 
 def count_calories(request):
     return render(request, 'count_calories/count_calories.html')
-
-
 
 def add_training(request):
     if request.method == 'POST':
@@ -123,7 +118,6 @@ def add_training(request):
         form = TrainingForm()
 
     return render(request, 'add_training/add_training.html', {'form': form})
-
 
 
 def training_list(request):
