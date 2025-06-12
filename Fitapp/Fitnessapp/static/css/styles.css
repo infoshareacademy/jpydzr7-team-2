@@ -58,17 +58,17 @@ h1, h2 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
     align-items: stretch;
-    max-width: 400px;
-    margin: 10px auto 20px;
+    max-width: 200px;
+    margin: 6px auto 6px;
     padding: 10px 16px;
 }
 
 form label {
     font-weight: bold;
     color: #174d26;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
 }
 
 form input,
@@ -153,9 +153,9 @@ button:hover, .btn:hover, .btn-return:hover, .btn-success:hover {
 .delete-button {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
-    padding: 6px 16px;
+    padding: 6px 6px;
     font-size: 0.9em;
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 2px 6px rgba(231, 76, 60, 0.4);
 }
 
@@ -204,7 +204,7 @@ p {
 
 .logout-container {
     position: fixed;
-    top: 60px;
+    top: 50px;
     right: 20px;
     z-index: 1100;
     display: flex;
@@ -229,13 +229,13 @@ p {
 
 .filter-badges {
     text-align: center;
-    margin: 16px 0;
+    margin: 10px 0;
 }
 
 .badge {
     display: inline-block;
-    margin: 4px 6px;
-    padding: 8px 16px;
+    margin: 6px 6px;
+    padding: 8px 10px;
     background-color: #3498db;
     color: white;
     border-radius: 20px;
@@ -243,6 +243,7 @@ p {
     font-weight: 700;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .badge:hover {
@@ -272,7 +273,7 @@ p {
         align-items: flex-start;
     }
     li > form {
-        margin-top: 10px;
+        margin-top: 8px;
         justify-content: center;
     }
     .btn-return {
