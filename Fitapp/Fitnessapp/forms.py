@@ -77,7 +77,7 @@ class MealForm(forms.ModelForm):
 
     date = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date'}),
-        label="Data treningu",
+        label="Data posiłku",
         initial=timezone.now().date(),
         required=True
     )
