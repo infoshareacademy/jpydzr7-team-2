@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje konto</title>
+    <link rel="icon" href="{% static 'icon/meal.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <!-- Górny pasek aplikacji -->
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <h1>Moje konto</h1>
+
+    {% if not edit_mode %}
+        <a href="?edit=1" class="btn-success">Edytuj dane</a>
+    {% endif %}
+
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if edit_mode %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-success">Zapisz zmiany</button>
+        </form>
+    {% else %}
+        <ul>
+            <li>
+                <dl>
+                    <dt><b>Imię:</b></dt>
+                    <dd><br>{{ user.first_name }}<br></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><b>Nazwisko:</b></dt>
+                    <dd><br>{{ user.last_name }}<br></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><b>Wiek:</b></dt>
+                    <dd><br>{{ user.age }}<br></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><b>Waga:</b></dt>
+                    <dd><br>{{ user.weight }} kg<br></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><b>Wzrost:</b></dt>
+                    <dd><br>{{ user.height }} cm<br></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt><b>Płeć:</b></dt>
+                    <dd><br>{{ user.gender }}<br></dd>
+                </dl>
+            </li>
+        </ul>
+    {% endif %}
+
+    <a href="{% url 'menu' %}" class="btn-return">Powrót</a>
+
+    <footer class="footer">
+        &copy; 2025 FitApp. Wszelkie prawa zastrzeżone.
+    </footer>
+
+</body>
+</html>

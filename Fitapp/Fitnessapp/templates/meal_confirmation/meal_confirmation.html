@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Potwierdzenie dodania posiłku</title>
+    <link rel="icon" href="{% static 'icon/meal.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <h1>Posiłek dodany!</h1>
+    <p>Posiłek: <strong>{{ meal.name }}</strong></p>
+    <p>Rodzaj: {{ meal.meal_type }}</p>
+    <p>Kalorie: {{ meal.calories }} kcal</p>
+    <p>Data: {{ meal.date|date:"d/m/Y" }}</p>
+
+    <a href="{% url 'list_meals' %}" class="btn-return">Powróć do listy posiłków</a>
+
+    <div class="footer">
+        &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <h1 class="page-title">Zaloguj się</h1>
+
+    <form method="post" class="form-container">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Imię użytkownika" required>
+        <input type="password" name="password" placeholder="Hasło" required>
+        <button type="submit" class="btn-primary">Zaloguj</button>
+    </form>
+    <div style="text-align: center; margin-top: 15px;">
+        <a href="{% url 'register' %}" class="btn-primary" style="padding: 8px 16px; font-size: 1em; text-decoration: none; display: inline-block;">Zarejestruj się</a>
+    </div>
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <footer class="footer">
+        &copy; 2025 FitApp. Wszelkie prawa zastrzeżone.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodawanie posiłku</title>
+    <link rel="icon" href="{% static 'icon/meal.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+    <h1>Dodaj posiłek</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Dodaj posiłek</button>
+    </form>
+    <a href="{% url 'menu' %}" class="btn-return">Powrót</a>
+    <div class="footer">
+        &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.
+    </div>
+</body>
+</html>

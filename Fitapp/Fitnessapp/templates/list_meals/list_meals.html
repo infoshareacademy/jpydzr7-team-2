@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje posiłki</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <h1>Moje posiłki</h1>
+
+    <form method="get">
+        <label for="date">Wybierz datę:</label>
+        <input type="date" name="date" id="date" value="{{ request.GET.date }}" required>
+        <button type="submit">Pokaż posiłki</button>
+    </form>
+    <h1>Posiłki:</h1>
+    {% if meals %}
+        <ul>
+            {% for meal in meals %}
+                <li>
+                    <strong>{{ meal.date|date:"d/m/Y" }} - {{ meal.meal_type }}</strong> {{ meal.name }} - {{ meal.calories }} kcal
+                    <form action="{% url 'delete_meal' meal.id %}" method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć ten posiłek?')" class="delete-button">
+                        Usuń
+                    </button>
+                </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nie masz jeszcze żadnych posiłków.</p>
+    {% endif %}
+
+    <a href="{% url 'menu' %}" class="btn-return">Powrót</a>
+
+    <div class="footer">
+        &copy; 2025 FitApp. Wszystkie prawa zastrzeżone.
+    </div>
+</body>
+</html>

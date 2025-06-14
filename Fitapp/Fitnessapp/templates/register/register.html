@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja</title>
+    <link rel="icon" href="{% static 'icon/gym_6750831.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="appbar">
+        FitApp
+    </div>
+
+    <h1 class="page-title">Rejestracja</h1>
+
+    <form method="post" class="form-container">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Zarejestruj się</button>
+    </form>
+
+    <footer class="footer">
+        &copy; 2025 FitApp. Wszelkie prawa zastrzeżone.
+    </footer>
+</body>
+</html>
